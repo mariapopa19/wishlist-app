@@ -21,7 +21,8 @@ export default function Profile() {
                 /> */}
                 <Avatar
                  alt='profile-test'
-                 src='../../assets/profile-test.jpg'
+                //  src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                src='../assets/profile-test.jpg'
                  sx={{
                     width: 500,
                     height: 500,
