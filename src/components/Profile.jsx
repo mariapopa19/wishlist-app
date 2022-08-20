@@ -21,7 +21,7 @@ export default function Profile() {
                 /> */}
                 <Avatar
                  alt='profile-test'
-                 src='/assets/profile-test.jpg'
+                 src='../assets/profile-test.jpg'
                  sx={{
                     width: 500,
                     height: 500,
