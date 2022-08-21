@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import NavBar from "./NavBar";
 import Avatar from '@mui/material/Avatar';
 import ListMinimised from "./ListMinimised";
@@ -45,14 +45,6 @@ export default function Profile() {
                     justifyContent: 'left'
                 }}
             >
-                {/* <Paper
-                    sx={{
-                        height: 140,
-                        width: 800,
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                    }}
-                /> */}
                 <Box sx={{ width: '100%', display: { xs: 'flex', md: 'flex' }, flexDirection: { md: 'column' }, alignItems: { xs: 'center', md: 'flex-start' } }}>
                     <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>Name</Typography>
                     <Typography variant="h4" gutterBottom sx={{ m: { xs: 2 } }}>Popa Maria</Typography>
