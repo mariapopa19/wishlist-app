@@ -1,7 +1,8 @@
-import { Grid, Paper } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import NavBar from "./NavBar";
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import ListMinimised from "./ListMinimised";
+import Group from "./Group";
 
 
 export default function Profile() {
@@ -10,7 +11,40 @@ export default function Profile() {
             <Grid item xs={12} md={12} lg={12}>
                 <NavBar />
             </Grid>
-            <Grid item sm={6} md={6} lg={6}>
+            <Grid
+                item
+                sm={12}
+                md={8}
+                lg={6}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <Avatar
+                    alt='profile-test'
+                    //  src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                    src='../assets/profile-test.jpg'
+                    sx={{
+                        width: 500,
+                        height: 500,
+                        m: 4,
+                    }}
+                />
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                sm={12}
+                md={4}
+                lg={6}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'left'
+                }}
+            >
                 {/* <Paper
                     sx={{
                         height: 140,
@@ -19,16 +53,54 @@ export default function Profile() {
                             theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                     }}
                 /> */}
-                <Avatar
-                 alt='profile-test'
-                //  src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-                src='../assets/profile-test.jpg'
-                 sx={{
-                    width: 500,
-                    height: 500,
-                    m: 4,
-                 }}
-                 />
+                <Box sx={{ width: '100%', display: { xs: 'flex', md: 'flex' }, flexDirection: { md: 'column' }, alignItems: { xs: 'center', md: 'flex-start' } }}>
+                    <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>Name</Typography>
+                    <Typography variant="h4" gutterBottom sx={{ m: { xs: 2 } }}>Popa Maria</Typography>
+                    <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>Birthday</Typography>
+                    <Typography variant="h4" gutterBottom sx={{ m: { xs: 2 } }}>19-01-2001</Typography>
+                </Box>
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start'
+                }}
+            >
+                <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>My wishlists</Typography>
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyItems: 'left'
+                }}
+            >
+                <ListMinimised />
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start'
+                }}
+            >
+                <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>My gruops</Typography>
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyItems: 'left'
+                }}
+            >
+                <Group />
             </Grid>
 
         </Grid>
