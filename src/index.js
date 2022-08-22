@@ -15,8 +15,9 @@ root.render(
       <Routes>
         <Route path='/' element={<SignUp />} />
         <Route path='login' element={<SignIn />} />
-        <Route path='profile' element={<Profile />}>
-          <Route index path='my-list' element={<ListOwner />} />
+        <Route path='profile'>
+          <Route index element={<Profile />} />
+          <Route path='my-list' element={<ListOwner />} />
         </Route>
       </Routes>
     </BrowserRouter>
