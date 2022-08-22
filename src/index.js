@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Profile from './components/Profile';
+import ListOwner from './components/List-owner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,8 +14,10 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<SignUp />} />
-        <Route path='/login' element={<SignIn />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='login' element={<SignIn />} />
+        <Route path='profile' element={<Profile />}>
+          <Route index path='my-list' element={<ListOwner />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

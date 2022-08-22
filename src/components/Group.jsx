@@ -11,7 +11,7 @@ export default function Group() {
             }}
         >
             <Paper
-                elevation='4'
+                elevation={4}
                 sx={{
                     width: 200,
                     height: 50,
@@ -32,7 +32,7 @@ export default function Group() {
                 </Typography>
             </Paper>
             <Paper
-                elevation='4'
+                elevation={4}
                 sx={{
                     width: 200,
                     height: 50,
