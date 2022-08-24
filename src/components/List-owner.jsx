@@ -11,10 +11,18 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import PeopleMyList from './People-myList';
+import { useState } from 'react';
+import AddListItem from './AddListItem-modal';
+
 
 
 
 export default function ListOwner() {
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     return (
         <Grid container sx={{ flexGrow: 1 }}>
             <Grid item xs={12} md={12} lg={12}>
@@ -48,6 +56,7 @@ export default function ListOwner() {
                         <ListItem label={'car'} />
                     </Stack>
                     <IconButton
+                        onClick={handleOpen}
                         sx={{
                             ml: 2,
                         }}
@@ -59,6 +68,7 @@ export default function ListOwner() {
                         </Avatar>
                     </IconButton>
                 </Box>
+                <AddListItem open={open} close={handleClose} />
             </Grid>
             <Grid item lg={6}>
                 <Box
