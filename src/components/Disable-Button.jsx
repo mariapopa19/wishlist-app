@@ -13,7 +13,9 @@ export default function DisableButton() {
             variant='contained'
             color='inherit'
             sx={{
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                width: 80,
+                height: 35
             }}
         >
             Disable
