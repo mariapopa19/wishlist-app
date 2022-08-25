@@ -8,8 +8,15 @@ import { useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button';
 
 export default function AddListItem({ open, close }) {
+
+    const [quantity, setQuantity] = useState(1);
+
+    const handleChangeQuantity = (event, newValue) => {
+        setQuantity(newValue);
+      };
 
     function valuetext(value) {
         return `${value}`;
@@ -81,6 +88,7 @@ export default function AddListItem({ open, close }) {
                                         required
                                         id="item-quantity"
                                         name="item-quantity"
+                                        value={quantity}
                                         sx={{ width: 100 }}
                                     />
                                     <Box sx={{ width: 260 }}>
@@ -91,11 +99,11 @@ export default function AddListItem({ open, close }) {
                                             getAriaValueText={valuetext}
                                             min={1}
                                             max={50}
+                                            onChange={handleChangeQuantity}
                                         />
                                     </Box>
                                 </Box>
                             </Box>
-                            {/*  */}
                             <TextField
                                 required
                                 fullWidth
@@ -109,47 +117,65 @@ export default function AddListItem({ open, close }) {
                             />
                         </Box>
                     </Grid>
-                    <Grid item lg={6}>
+                    <Grid item lg={6}> {/*//! second column*/}
                         <Box
                             sx={{
-                                m: 4,
-                                width: 400,
-                                height: 350,
+                                height: 500,
                                 display: 'flex',
                                 flexDirection: 'column',
-                                justifyContent: 'space-evenly'
+                                alignItems: 'flex-end',
+                                justifyContent: 'space-between',
                             }}
                         >
-                            <FormControl sx={{ minWidth: 80 }}>
-                                <InputLabel id="demo-simple-select-autowidth-label">Size</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-autowidth-label"
-                                    id="demo-simple-select-autowidth"
-                                    value={size}
-                                    onChange={handleChange}
-                                    autoWidth
-                                    label="Size"
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={'s'}>Small</MenuItem>
-                                    <MenuItem value={'m'}>Medium</MenuItem>
-                                    <MenuItem value={'l'}>Large</MenuItem>
+                            <Box
+                                sx={{
+                                    m: 4,
+                                    width: 400,
+                                    height: 350,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-evenly'
+                                }}
+                            >
+                                <FormControl sx={{ minWidth: 80 }}>
+                                    <InputLabel id="demo-simple-select-autowidth-label">Size</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-autowidth-label"
+                                        id="demo-simple-select-autowidth"
+                                        value={size}
+                                        onChange={handleChange}
+                                        autoWidth
+                                        label="Size"
+                                    >
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value={'s'}>Small</MenuItem>
+                                        <MenuItem value={'m'}>Medium</MenuItem>
+                                        <MenuItem value={'l'}>Large</MenuItem>
 
-                                </Select>
-                            </FormControl>
-                            <Box>
-                            <InputLabel>If the items are not aviable, give some alternatives</InputLabel>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={6}
-                                id="item-details"
-                                name="item-details"
-                            // sx={{ m: 2 }}
-                            />
+                                    </Select>
+                                </FormControl>
+                                <Box>
+                                    <InputLabel>If the items are not aviable, give some alternatives</InputLabel>
+                                    <TextField
+                                        fullWidth
+                                        multiline
+                                        rows={6}
+                                        id="item-details"
+                                        name="item-details"
+                                    // sx={{ m: 2 }}
+                                    />
+                                </Box>
                             </Box>
+                            <Button
+                                variant='contained'
+                                color='primary'
+                                size='large'
+                                sx={{
+                                    mr: 4
+                                }}
+                            >Add Item</Button>
                         </Box>
                     </Grid>
                 </Grid>
