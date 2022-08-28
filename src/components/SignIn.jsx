@@ -13,19 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import Footer from './Footer';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <LinkMUI color="inherit" href="https://mui.com/">
-        Your Website
-      </LinkMUI>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 
@@ -38,6 +27,7 @@ export default function SignIn() {
       password: data.get('password'),
     });
   };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -97,14 +87,14 @@ export default function SignIn() {
                 </LinkMUI>
               </Grid>
               <Grid item>
-                <Link to='/'>
+                <Link to='signup'>
                   "Don't have an account? Sign Up"
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Footer sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

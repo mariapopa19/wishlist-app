@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import PeopleMyList from './People-myList';
 import { useState } from 'react';
 import AddListItem from './AddListItem-modal';
+import Footer from './Footer';
 
 
 
@@ -35,7 +36,7 @@ export default function ListOwner() {
                     display: 'flex',
                     alignItems: 'flex-start',
                     borderBottom: '1px solid',
-                    borderColor: 'lightgray'
+                    borderColor: 'lightgray',
                 }}
             >
                 <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>Birthday list</Typography>
@@ -48,7 +49,6 @@ export default function ListOwner() {
                 >
                     <Stack
                         sx={{
-                            fontSize: 'h1.fontSize', // !!
                             mt: 2,
                         }}
                     >
@@ -103,6 +103,9 @@ export default function ListOwner() {
                     <PeopleMyList username='maria19' />
                     <PeopleMyList username='adina10' />
                 </Box>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Footer sx={{ m: 4 }} />
             </Grid>
         </Grid>
     );

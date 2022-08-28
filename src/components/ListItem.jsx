@@ -16,19 +16,16 @@ export default function ListItem({ label }) {
                 display: 'flex',
                 justifyContent: 'flex-start',
                 ml: 4,
-                fontSize: 'h1.fontSize', // !!
                 mb: 2,
             }}
         >
-            <Typography component='div'>
+            
                 <FormControlLabel
                     control={<Checkbox />}
-                    label={`${label}`}
-                    sx={{
-                        fontSize: 'h1.fontSize', // !!
-                    }}
+                    label={<Typography component='div' variant='h6'>{label}</Typography>}
+                    sx={{typography: 'h4'}}
                 />
-            </Typography>
+            
             <DisableButton />
 
         </Box>

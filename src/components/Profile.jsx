@@ -2,7 +2,8 @@ import { Box, Grid, Typography } from "@mui/material";
 import NavBar from "./NavBar";
 import Avatar from '@mui/material/Avatar';
 import ListMinimised from "./ListMinimised";
-import Group from "./Group";
+import Footer from "./Footer";
+import Groups from "./Groups";
 
 
 export default function Profile() {
@@ -89,12 +90,15 @@ export default function Profile() {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyItems: 'left'
+                    justifyItems: 'left',
                 }}
             >
-                <Group />
+                <Groups name={'friends'} />
+                <Groups name={'family'} />
             </Grid>
-
+            <Grid item lg={12} md={12} xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Footer sx={{ m: 4 }} />
+            </Grid>
         </Grid>
     );
 }
