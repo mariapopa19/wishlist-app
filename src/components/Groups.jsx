@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 
-export const StyledPaper = styled(Paper)(({theme}) => ({
+export const StyledPaper = styled(Paper)(({ theme }) => ({
     '&:hover': {
         backgroundColor: '#F4F4F4'
     }
@@ -37,8 +37,7 @@ export default function Groups({ name }) {
                             fontWeight: 'bold',
                             textTransform: 'capitalize',
                         }}
-                    >
-                        {name}
+                    >{name}
                     </Typography>
                 </StyledPaper>
             </Box>

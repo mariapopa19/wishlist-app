@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import Avatar from '@mui/material/Avatar';
-import ListMinimised from "./ListMinimised";
-import Footer from "./Footer";
-import Groups from "./Groups";
+import ListMinimised from "../components/ListMinimised";
+import Footer from "../components/Footer";
+import Groups from "../components/Groups";
 
 
 export default function Profile() {

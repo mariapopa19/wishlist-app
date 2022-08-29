@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SignUp from './components/SignUp';
-import SignIn from './components/SignIn';
-import Profile from './components/Profile';
-import ListOwner from './components/List-owner';
-import GroupPage from './components/Group-page';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
+import Profile from './pages/Profile';
+import ListOwner from './pages/List-owner';
+import GroupPage from './pages/Group-page';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

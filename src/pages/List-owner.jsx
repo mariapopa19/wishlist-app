@@ -1,8 +1,8 @@
 import Grid from '@mui/material/Grid';
-import NavBar from './NavBar';
+import NavBar from '../components/NavBar';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import ListItem from './ListItem';
+import ListItem from '../components/ListItem';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
@@ -10,10 +10,10 @@ import { Box } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import PeopleMyList from './People-myList';
+import PeopleMyList from '../components/People-myList';
 import { useState } from 'react';
-import AddListItem from './AddListItem-modal';
-import Footer from './Footer';
+import AddListItem from '../components/AddListItem-modal';
+import Footer from '../components/Footer';
 
 
 
