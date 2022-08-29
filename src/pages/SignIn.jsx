@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import Footer from '../components/Footer';
+import Footer from '../layout/Footer';
 
 
 const theme = createTheme();

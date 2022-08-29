@@ -1,8 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
-import NavBar from "../components/NavBar";
+import NavBar from "../layout/NavBar";
 import Avatar from '@mui/material/Avatar';
 import ListMinimised from "../components/ListMinimised";
-import Footer from "../components/Footer";
+import Footer from "../layout/Footer";
 import Groups from "../components/Groups";
 
 

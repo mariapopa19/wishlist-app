@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Grid';
-import NavBar from '../components/NavBar';
+import NavBar from '../layout/NavBar';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import ListItem from '../components/ListItem';
@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import PeopleMyList from '../components/People-myList';
 import { useState } from 'react';
 import AddListItem from '../components/AddListItem-modal';
-import Footer from '../components/Footer';
+import Footer from '../layout/Footer';
 
 
 
@@ -41,7 +41,7 @@ export default function ListOwner() {
             >
                 <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>Birthday list</Typography>
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} sx={{height: 700}}>
                 <Box
                     sx={{
                         my: 3,

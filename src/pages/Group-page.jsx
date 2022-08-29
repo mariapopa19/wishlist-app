@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
-import NavBar from "../components/NavBar";
+import NavBar from "../layout/NavBar";
 import Typography from '@mui/material/Typography';
 import ButtonLists from "../components/Button-friendsLists";
-import Popover from '@mui/material/Popover';
+import Footer from "../layout/Footer";
 
 export default function GroupPage({ name }) {
     return (
@@ -30,11 +30,20 @@ export default function GroupPage({ name }) {
                     flexDirection: 'column',
                     alignItems: 'center',
                     m: 2,
+                    height: 700,
                 }}
             >
-                <ButtonLists name={'Maria'} />
-                <ButtonLists name={'Cristi'} />
+                <ButtonLists name={'maria'} />
+                <ButtonLists name={'cristi'} />
 
+            </Grid>
+            <Grid item lg={12}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
+                <Footer />
             </Grid>
 
         </Grid>
