@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import NavBar from "../layout/NavBar";
 import Avatar from '@mui/material/Avatar';
 import ListMinimised from "../components/ListMinimised";
@@ -43,7 +43,8 @@ export default function Profile() {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'left'
+                    justifyContent: 'left',
+
                 }}
             >
                 <Box sx={{ width: '100%', display: { xs: 'flex', md: 'flex' }, flexDirection: { md: 'column' }, alignItems: { xs: 'center', md: 'flex-start' } }}>
@@ -62,6 +63,7 @@ export default function Profile() {
                 }}
             >
                 <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>My wishlists</Typography>
+                <Button variant='outlined' color='inherit' sx={{ mx: 4, m: 2, borderRadius: 20, backgroundColor: '#F4F4F4'  }} ><Typography variant='h6' gutterBottom sx={{ m: { xs: 2 }, fontWeight: 'bold',   }}>Add a list</Typography></Button>
             </Grid>
             <Grid
                 item
@@ -82,7 +84,7 @@ export default function Profile() {
                     alignItems: 'flex-start'
                 }}
             >
-                <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>My gruops</Typography>
+                <Typography variant='h2' gutterBottom sx={{ m: { xs: 2 } }}>My groups</Typography>
             </Grid>
             <Grid
                 item
