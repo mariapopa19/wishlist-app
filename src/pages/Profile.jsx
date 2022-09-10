@@ -18,7 +18,7 @@ export default function Profile() {
 
   const handleOpenList = () => setOpenList(true);
   const handleOpenItem = () => setOpenItem(true);
-  
+
   const handleCloseList = () => setOpenList(false);
   const handleCloseItem = () => setOpenItem(false);
   // let navigate = useNavigate();
@@ -35,8 +35,6 @@ export default function Profile() {
       setauthenticated(loggedInUser);
     }
   }, []);
-
-  
 
   // TODO: pe butonul de pe pagina de profil sa poti adauga un item nou in oricare lista
   // TODO: iar pe butonul de pe pagina cu lista sa am o optiune inainte de a accesa modalul sau chiar in modal in care ma lasa sa selectez un item deja existent
@@ -113,6 +111,8 @@ export default function Profile() {
         sx={{
           display: "flex",
           alignItems: "flex-start",
+          ml: 5,
+          mt: 5,
         }}
       >
         <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>
@@ -144,6 +144,8 @@ export default function Profile() {
         sx={{
           display: "flex",
           alignItems: "flex-start",
+          ml: 5,
+          mt: 5,
         }}
       >
         <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>
@@ -157,6 +159,7 @@ export default function Profile() {
           display: "flex",
           alignItems: "center",
           justifyItems: "left",
+          ml: 2,
         }}
       >
         <Groups name={"friends"} />
