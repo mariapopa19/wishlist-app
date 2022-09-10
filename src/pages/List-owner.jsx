@@ -12,10 +12,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import PeopleMyList from '../components/People-myList';
 import { useState } from 'react';
-import AddListItem from '../components/AddListItem-modal';
+import AddListItem from '../components/Modal-addListItem-onWhislistOpen';
 import Footer from '../layout/Footer';
-
-
 
 
 export default function ListOwner() {

@@ -29,6 +29,7 @@ export default function Groups({ name }) {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        borderRadius: 15,
                     }}
                 >
                     <Typography
