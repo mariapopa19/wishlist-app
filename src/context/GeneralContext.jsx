@@ -7,6 +7,7 @@ const GeneralProvider = (props) => {
   const [open, setOpen] = useState(false);
   const [namePerson, setNamePerson] = useState("");
   const [nameList, setNameList] = useState("");
+  const [groupPurchase, setGroupPurcase] = useState('');
 
   return (
     <GeneralContext.Provider
@@ -18,7 +19,9 @@ const GeneralProvider = (props) => {
         namePerson,
         setNamePerson,
         nameList,
-        setNameList
+        setNameList,
+        groupPurchase,
+        setGroupPurcase
       }}
     >
       {props.children}

@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import NavBar from '../layout/NavBar';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import ListItem from '../components/ListItem';
+import ListItem from '../components/ListItem-owner';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';

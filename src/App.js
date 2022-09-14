@@ -7,7 +7,7 @@ import GroupPage from "./pages/Group-page";
 import ListOther from "./pages/List-other";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
-import { GeneralContext } from "./context/GeneralContext";
+import { GeneralProvider } from "./context/GeneralContext";
 // import { getEmailToken } from "./api";
 
 export default function App() {
@@ -24,7 +24,7 @@ export default function App() {
   // }
 
   return (
-    <GeneralContext.Consumer>
+    <GeneralProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
@@ -35,18 +35,13 @@ export default function App() {
             <Route path="item" />
             <Route path="group">
               <Route index element={<GroupPage name={"friends"} />} />
-              <Route
-                path="list"
-                element={
-                  <ListOther />
-                }
-              />
+              <Route path="list" element={<ListOther />} />
             </Route>
             <Route path="notifications" element={<Notifications />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
       </BrowserRouter>
-    </GeneralContext.Consumer>
+    </GeneralProvider>
   );
 }
