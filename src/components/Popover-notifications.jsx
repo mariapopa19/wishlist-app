@@ -1,6 +1,12 @@
 import { Box, ButtonBase, Divider, Popover, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function NotificationPopover({ open, close, anchorEl }) {
+  let navigate = useNavigate();
+
+  const allNotifications = () => {
+    navigate('/dashboard/notifications')
+  }
   return (
     <Popover
       open={open}
@@ -24,6 +30,7 @@ export default function NotificationPopover({ open, close, anchorEl }) {
         </Typography>
       </Stack>
       <ButtonBase
+      onClick={allNotifications}
       sx={{
         width: '100%',
         borderRadius: 2,

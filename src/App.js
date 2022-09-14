@@ -6,6 +6,7 @@ import ListOwner from "./pages/List-owner";
 import GroupPage from "./pages/Group-page";
 import ListOther from "./pages/List-other";
 import Notifications from "./pages/Notifications";
+import Settings from "./pages/Settings";
 // import { getEmailToken } from "./api";
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
             />
           </Route>
           <Route path='notifications' element={<Notifications />} />
+          <Route path='settings' element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>
