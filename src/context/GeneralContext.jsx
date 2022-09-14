@@ -1,10 +1,12 @@
 import React, { createContext, useState } from "react";
 
- const GeneralContext = createContext({});
+const GeneralContext = createContext({});
 
- const GeneralProvider = props => {
+const GeneralProvider = (props) => {
   const [token, setToken] = useState(null);
   const [open, setOpen] = useState(false);
+  const [namePerson, setNamePerson] = useState("");
+  const [nameList, setNameList] = useState("");
 
   return (
     <GeneralContext.Provider
@@ -13,12 +15,15 @@ import React, { createContext, useState } from "react";
         setOpen,
         token,
         setToken,
+        namePerson,
+        setNamePerson,
+        nameList,
+        setNameList
       }}
     >
-      {console.log(open)}
       {props.children}
     </GeneralContext.Provider>
   );
 };
 
-export {GeneralContext, GeneralProvider};
+export { GeneralContext, GeneralProvider };

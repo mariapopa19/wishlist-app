@@ -1,8 +1,11 @@
 import { Grid } from "@mui/material";
 import NavBar from "../layout/NavBar";
 import Typography from '@mui/material/Typography';
+import { useContext } from "react";
+import { GeneralContext } from "../context/GeneralContext";
 
-export default function ListOther ({namePerson, nameList}) {
+export default function ListOther () {
+    const {namePerson, nameList} = useContext(GeneralContext);
     return(
         <Grid container>
             <Grid item lg={12}>
