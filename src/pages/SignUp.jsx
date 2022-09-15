@@ -33,19 +33,12 @@ function SignUp() {
 
   const handleSubmit =  async (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
     const res = await createUser(user, pass, email, firstName, lastName, phone, dob, city, country, detailedAddress);
 
     if(res){
       navigate('/')
     }
-    
-    // const res = await test("nume");
-    // console.log(res);
+  
   };
 
   return (

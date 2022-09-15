@@ -23,27 +23,18 @@ export const createUser = async (
   detailedAddress
 ) => {
   try {
-    const res = await axios.post(
-      generateURL("register"),
-      {
-        username: user,
-        password: pass,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        dob: dob,
-        city: city,
-        country: country,
-        detaliedAddress: detailedAddress,
-      },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    );
-    // const rest = res.header("Access-Control-Allow-Origin", "true");
+    const res = await axios.post(generateURL("register"), {
+      username: user,
+      password: pass,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      dob: dob,
+      city: city,
+      country: country,
+      completeAddress: detailedAddress,
+    });
     return res.data;
   } catch (e) {
     return false;
@@ -62,25 +53,30 @@ export const singIn = async (email, password) => {
   }
 };
 
-export const getEmailToken = async (email, token) => {
+export const singOut = async (token) => {
   try {
-    const res = await axios.get(generateURL("users"),{
-      
-        // headers: {
-          // "Access-Control-Allow-Origin": "*",
-          // "Authorization": `Bearer ${token}`,
-          // 'Content-Type': 'application/json',
-        // },
-      
+    const res = await axios.post(generateURL("logout"), {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
-    if(res.data.email){
-      console.log(res.data.email)
-      return true;
-    }
-    return false;
-    
+
+    return res.data;
   } catch (e) {
     return false;
+  }
+};
 
+export const getUser = async (token) => {
+  try {
+    const res = await axios.get(generateURL("users"), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res.data;
+  } catch (e) {
+    return false;
   }
 };

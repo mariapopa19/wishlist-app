@@ -8,21 +8,9 @@ import ListOther from "./pages/List-other";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import { GeneralProvider } from "./context/GeneralContext";
-// import { getEmailToken } from "./api";
+import { ProtectedRoute } from "./routes/ProtectedRoutes";
 
 export default function App() {
-  // const email = localStorage.getItem("email");
-  // if(!email) {
-  //     //  error page
-  // }
-
-  // const user = getEmailToken(email);
-  // if(user?.email === email) {
-  //     <Profile />
-  // } else {
-  //      <SignIn />
-  // }
-
   return (
     <GeneralProvider>
       <BrowserRouter>
@@ -30,11 +18,32 @@ export default function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="dashboard">
-            <Route index element={<Profile />} />
-            <Route path="my-list" element={<ListOwner />} />
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="my-list"
+              element={
+                <ProtectedRoute>
+                  <ListOwner />
+                </ProtectedRoute>
+              }
+            />
             <Route path="item" />
             <Route path="group">
-              <Route index element={<GroupPage name={"friends"} />} />
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <GroupPage name={"friends"} />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="list" element={<ListOther />} />
             </Route>
             <Route path="notifications" element={<Notifications />} />

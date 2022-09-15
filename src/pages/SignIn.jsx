@@ -15,7 +15,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../layout/Footer";
 import { singIn } from "../api";
-// import { GeneralProvider } from "../context/GeneralContext";
+import { useContext } from "react";
+import { GeneralContext } from "../context/GeneralContext";
+
 
 const theme = createTheme();
 
@@ -23,25 +25,26 @@ export default function SignIn() {
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
 
-  // const { setToken } = React.useContext(GeneralProvider);
+  const {token, setToken} = useContext(GeneralContext);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
   
     const res = await singIn(email, pass);
     if (res.token) {
-      localStorage.setItem('email', JSON.stringify(res.email))
-      localStorage.setItem('token', JSON.stringify(res.token))
-      navigate('dashboard');
+      setToken(res.token);
+      localStorage.setItem('token', res.token)
+      navigate('/dashboard');
     }
   };
+
+  React.useEffect(()=>{
+    if(!token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
 
   // todo: salvat token-ul in session storage sau local storage si time stamp-ul si sa verific daca a trecut o ora sau sa il fac valabil o ora, dupa sa il dezactivez si automat sa interzic accesul la dashboard
 

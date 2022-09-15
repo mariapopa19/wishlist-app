@@ -40,6 +40,8 @@ export default function NavBar() {
   const openNotification = Boolean(anchorElNotification);
   const openProfile = Boolean(anchorElProfile);
 
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
