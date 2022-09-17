@@ -37,7 +37,7 @@ export const createUser = async (
     });
     return res.data;
   } catch (e) {
-    return false;
+    throw Error(e.message);
   }
 };
 
@@ -47,19 +47,24 @@ export const singIn = async (email, password) => {
       email: email,
       password: password,
     });
+    console.log(res);
     return res.data;
   } catch (e) {
-    return false;
+    throw Error(e.message);
   }
 };
 
 export const singOut = async (token) => {
   try {
-    const res = await axios.post(generateURL("logout"), {}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axios.post(
+      generateURL("logout"),
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return res.data;
   } catch (e) {
@@ -75,6 +80,64 @@ export const getUser = async (token) => {
       },
     });
 
+    return res.data;
+  } catch (e) {
+    throw Error(e);
+  }
+};
+
+export const updateUser = async (
+  token,
+  avatar,
+  user,
+  pass,
+  firstName,
+  lastName,
+  phone,
+  city,
+  country,
+  detailedAddress
+) => {
+  try {
+    const res = await axios.patch(
+      generateURL("updateProfile"),
+      {
+        avatar: avatar,
+        username: user,
+        password: pass,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        city: city,
+        country: country,
+        completeAddress: detailedAddress,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const addList = async (token, name) => {
+  try {
+    const res = await axios.post(
+      generateURL("wishlists"),
+      {
+        name: name,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data;
   } catch (e) {
     return false;

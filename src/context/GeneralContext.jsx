@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GeneralContext = createContext({});
 
@@ -8,6 +9,14 @@ const GeneralProvider = (props) => {
   const [namePerson, setNamePerson] = useState("");
   const [nameList, setNameList] = useState("");
   const [groupPurchase, setGroupPurcase] = useState(''); 
+
+  let navigate = useNavigate();
+
+  const logOut = async () => {
+    localStorage.clear();
+    setToken(null);
+    navigate("/");
+  };
 
   return (
     <GeneralContext.Provider
@@ -21,7 +30,8 @@ const GeneralProvider = (props) => {
         nameList,
         setNameList,
         groupPurchase,
-        setGroupPurcase
+        setGroupPurcase,
+        logOut
       }}
     >
       {props.children}

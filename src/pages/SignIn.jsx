@@ -3,9 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import LinkMUI from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -17,13 +14,23 @@ import Footer from "../layout/Footer";
 import { singIn } from "../api";
 import { useContext } from "react";
 import { GeneralContext } from "../context/GeneralContext";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 
 const theme = createTheme();
 
 export default function SignIn() {
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
+
+  const [show, setShow] = React.useState(false);
 
   const {token, setToken} = useContext(GeneralContext);
 
@@ -31,13 +38,20 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+    setShow(false);
+    try {
     const res = await singIn(email, pass);
+    
     if (res.token) {
       setToken(res.token);
       localStorage.setItem('token', res.token)
       navigate('/dashboard');
     }
+  } catch (e) {
+    if(e.message === "Request failed with status code 500") {
+      setShow(true);
+    }
+  }
   };
 
   React.useEffect(()=>{
@@ -62,7 +76,7 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -92,14 +106,26 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {show ? (<Typography variant='body2' sx={{
+              color: 'red',
+            }} >Incorrect email or password</Typography>) : null}
             <Button
               type="submit"
               fullWidth
@@ -110,9 +136,7 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <LinkMUI href="#" variant="body2">
-                  Forgot password?
-                </LinkMUI>
+                <Box sx={{ width: 100 }}></Box>
               </Grid>
               <Grid item>
                 <Link to="signup">Don't have an account? Sign Up</Link>

@@ -5,11 +5,12 @@ import ListMinimised from "../components/ListMinimised";
 import Footer from "../layout/Footer";
 import Groups from "../components/Groups";
 import ButtonAdd from "../components/Button-add-a-list";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AddItem from "../components/Modal-addItem-onProfileOpen";
 import AddAListName from "../components/Modal-addAList";
-import { GeneralContext } from "../context/GeneralContext";
 import { getUser } from "../api";
+import { useContext } from "react";
+import { GeneralContext } from "../context/GeneralContext";
 
 export default function Profile() {
   // const {open, setOpen} = useContext(GeneralContext);
@@ -27,30 +28,40 @@ export default function Profile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
+  const [avatar, setAvatar] = useState("");
 
-  const { token } = useContext(GeneralContext);
+  const [wishListNames, setWishListNames] = useState([]);
+
+  const { logOut } = useContext(GeneralContext);
 
   // ! de ce atunci cand foloesc useEffect imi face loop
 
   const getDetails = async () => {
-    const res = await getUser(token);
-    if(res) {
-    setFirstName(res.userDetails.firstName);
-    setLastName(res.userDetails.lastName);
-    setDob(new Date(res.userDetails.dob).toLocaleDateString('en-GB', {
-      year:"numeric",
-      month:"long",
-      day:"numeric"
-    }));
-  }
+    try {
+      const res = await getUser(localStorage.getItem("token"));
+      if (res) {
+        setFirstName(res.userDetails.firstName);
+        setLastName(res.userDetails.lastName);
+        setAvatar(res.userDetails.avatar);
+        setDob(
+          new Date(res.userDetails.dob).toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        );
+        setWishListNames(res.wislist);
+      } 
+    } catch (e) {
+      if(e.message === "AxiosError: Request failed with status code 403") {
+        logOut();
+      }
+    }
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     getDetails();
-  })
-
-  
-  
+  }, []);
 
   // TODO: pe butonul de pe pagina de profil sa poti adauga un item nou in oricare lista
   // TODO: iar pe butonul de pe pagina cu lista sa am o optiune inainte de a accesa modalul sau chiar in modal in care ma lasa sa selectez un item deja existent
@@ -76,7 +87,7 @@ export default function Profile() {
         <Avatar
           alt="profile-test"
           //  src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-          src="../assets/profile-test.jpg"
+          src={avatar}
           sx={{
             width: 500,
             height: 500,
@@ -149,7 +160,8 @@ export default function Profile() {
           justifyItems: "left",
         }}
       >
-        <ListMinimised />
+        {/* wishListNames.map((elm, i) => <ListMinimised name={elm.name} />) */}
+        {/* <ListMinimised /> */}
       </Grid>
       <Grid
         item

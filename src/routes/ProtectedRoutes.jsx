@@ -5,11 +5,9 @@ import { GeneralContext } from "../context/GeneralContext";
 export const ProtectedRoute = ({ children }) => {
   const { token } = useContext(GeneralContext);
 
-  if (token === null) {
-    console.log("from protected", token);
+  if (localStorage.getItem('token') === null && token === null) {
     return <Navigate to="/" replace />;
   } else {
-    console.log("from protected", token);
     return children;
   }
 };

@@ -12,8 +12,9 @@ import { ProtectedRoute } from "./routes/ProtectedRoutes";
 
 export default function App() {
   return (
-    <GeneralProvider>
+    
       <BrowserRouter>
+      <GeneralProvider>
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
@@ -44,13 +45,35 @@ export default function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="list" element={<ListOther />} />
+              <Route
+                path="list"
+                element={
+                  <ProtectedRoute>
+                    <ListOther />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="settings" element={<Settings />} />
+            <Route
+              path="notifications"
+              element={
+                <ProtectedRoute>
+                  <Notifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Routes>
+        </GeneralProvider>
       </BrowserRouter>
-    </GeneralProvider>
+    
   );
 }
