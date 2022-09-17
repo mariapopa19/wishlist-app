@@ -13,9 +13,16 @@ import Button from "@mui/material/Button";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import { addItem, addItemToWish, getList, getUser } from "../api";
+import { GeneralContext } from "../context/GeneralContext";
 
 export default function AddItem({ open, close }) {
   const [quantity, setQuantity] = useState(1);
+
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+  const [details, setDetails] = useState("");
+  const [size, setSize] = useState("");
 
   const handleChangeQuantity = (event, newValue) => {
     setQuantity(newValue);
@@ -25,13 +32,28 @@ export default function AddItem({ open, close }) {
     return `${value}`;
   }
 
-  const [size, setSize] = useState("");
+  // ! select the list name
+  const { logOut } = React.useContext(GeneralContext);
+  const [lists, setLists] = useState([]);
 
-  const handleChange = (event) => {
-    setSize(event.target.value);
+  const getDetails = async () => {
+    try {
+      const res = await getUser(localStorage.getItem("token"));
+      if (res) {
+        setLists(res.wishlist);
+      }
+    } catch (e) {
+      if (e.message === "AxiosError: Request failed with status code 403") {
+        logOut();
+      }
+    }
   };
 
-  // ! select the list name
+  React.useEffect(() => {
+    getDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [listName, setListName] = React.useState([]);
   const handleChangeListName = (event) => {
     const {
@@ -42,6 +64,40 @@ export default function AddItem({ open, close }) {
       typeof value === "string" ? value.split(",") : value
     );
   };
+
+  // const handleChecked = (position) => {
+  //   const updatedCheckedState = listChecked.map((item, index) =>
+  //     index === position ? !item : item
+  //   );
+  //   setListChecked(updatedCheckedState);
+  // };
+
+  // const addItemButton = async () => {
+  //   const res = await addItem(name, details, link, size, quantity);
+  //   const idLists = await Promise.all( listName.map( async (elm) => {
+  //     const res = await getList(localStorage.getItem("token"), elm)
+  //     if (res) {
+  //       return res.id;
+  //     }
+  //   }))
+  //   console.log(res)
+
+  //   await addItemToWish(idLists, res.id);
+  //   close();
+  // };
+
+   const addItemButton = async () => {
+    const res = await addItem(name, details, link, size, quantity);
+    const idLists = [];
+    for(let name of listName) {
+      let list = await getList(name);
+      idLists.push(list.id);
+    }
+
+    await addItemToWish(idLists, res.id);
+    close();
+  };
+
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -54,11 +110,7 @@ export default function AddItem({ open, close }) {
     },
   };
 
-  const lists = [
-    "Birthday",
-    "Christmas",
-    "Name day",
-  ];
+  // const lists = ["Birthday", "Christmas", "Name day"];
 
   return (
     <Modal open={open} onClose={close}>
@@ -90,6 +142,7 @@ export default function AddItem({ open, close }) {
               <TextField
                 required
                 fullWidth
+                onChange={(e) => setName(e.target.value)}
                 id="item-name"
                 label="Name (what is this)"
                 name="item-name"
@@ -101,6 +154,7 @@ export default function AddItem({ open, close }) {
                 id="item-url"
                 label="URL"
                 name="item-url"
+                onChange={(e) => setLink(e.target.value)}
                 // sx={{ m: 2 }}
               />
               <Box>
@@ -113,7 +167,8 @@ export default function AddItem({ open, close }) {
                   }}
                 >
                   <TextField
-                    required
+                    // required
+                    onChange={(e) => setQuantity(e.target.value)}
                     id="item-quantity"
                     name="item-quantity"
                     value={quantity}
@@ -132,16 +187,17 @@ export default function AddItem({ open, close }) {
                   </Box>
                 </Box>
               </Box>
-              <TextField
+              {/* <TextField
                 required
                 fullWidth
                 multiline
                 rows={4}
+                onChange={(e) => setDetails(e.target.value)}
                 id="item-details"
                 label="Details"
                 name="item-details"
                 // sx={{ m: 2 }}
-              />
+              /> */}
             </Box>
           </Grid>
           <Grid item lg={6}>
@@ -166,42 +222,25 @@ export default function AddItem({ open, close }) {
                   justifyContent: "space-evenly",
                 }}
               >
-                <FormControl sx={{ minWidth: 80 }}>
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Size
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-autowidth-label"
-                    id="demo-simple-select-autowidth"
-                    value={size}
-                    onChange={handleChange}
-                    autoWidth
-                    label="Size"
-                  >
-                    {/* 
-                    //  ! i need a map array in db
-                    */}
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"s"}>Small</MenuItem>
-                    <MenuItem value={"m"}>Medium</MenuItem>
-                    <MenuItem value={"l"}>Large</MenuItem>
-                  </Select>
-                </FormControl>
-                <Box>
-                  <InputLabel>
-                    If the items are not aviable, give some alternatives
-                  </InputLabel>
-                  <TextField
-                    fullWidth
-                    multiline
-                    rows={6}
-                    id="item-details"
-                    name="item-details"
-                    // sx={{ m: 2 }}
-                  />
-                </Box>
+                <TextField
+                  required
+                  fullWidth
+                  multiline
+                  rows={4}
+                  onChange={(e) => setDetails(e.target.value)}
+                  id="item-details"
+                  label="Details"
+                  name="item-details"
+                  // sx={{ m: 2 }}
+                />
+                <TextField
+                  fullWidth
+                  id="size"
+                  name="size"
+                  label="Size"
+                  onChange={(e) => setSize(e.target.value)}
+                  // sx={{ m: 2 }}
+                />
                 {/*// ! where i chose in witch list my item to be*/}
                 <FormControl sx={{ width: 400, my: 1 }}>
                   <InputLabel>List Name</InputLabel>
@@ -215,9 +254,9 @@ export default function AddItem({ open, close }) {
                     MenuProps={MenuProps}
                   >
                     {lists.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={listName.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
+                      <MenuItem key={name.id} value={name.name}>
+                        <Checkbox checked={listName.indexOf(name.name) > -1} />
+                        <ListItemText primary={name.name} />
                       </MenuItem>
                     ))}
                   </Select>
@@ -228,6 +267,7 @@ export default function AddItem({ open, close }) {
                 variant="contained"
                 color="primary"
                 size="large"
+                onClick={addItemButton}
                 sx={{
                   mr: 4,
                 }}

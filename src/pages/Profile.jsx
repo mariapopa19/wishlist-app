@@ -30,7 +30,7 @@ export default function Profile() {
   const [dob, setDob] = useState("");
   const [avatar, setAvatar] = useState("");
 
-  const [wishListNames, setWishListNames] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
 
   const { logOut } = useContext(GeneralContext);
 
@@ -50,7 +50,7 @@ export default function Profile() {
             day: "numeric",
           })
         );
-        setWishListNames(res.wislist);
+        setWishlist(res.wishlist);
       } 
     } catch (e) {
       if(e.message === "AxiosError: Request failed with status code 403") {
@@ -61,6 +61,7 @@ export default function Profile() {
 
   useEffect(() => {
     getDetails();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // TODO: pe butonul de pe pagina de profil sa poti adauga un item nou in oricare lista
@@ -160,8 +161,7 @@ export default function Profile() {
           justifyItems: "left",
         }}
       >
-        {/* wishListNames.map((elm, i) => <ListMinimised name={elm.name} />) */}
-        {/* <ListMinimised /> */}
+        {wishlist.map((elm, i) => <ListMinimised name={elm.name} id={elm.id} />)}
       </Grid>
       <Grid
         item

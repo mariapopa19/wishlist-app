@@ -28,7 +28,7 @@ export default function App() {
               }
             />
             <Route
-              path="my-list"
+              path="my-list/:name/:id"
               element={
                 <ProtectedRoute>
                   <ListOwner />

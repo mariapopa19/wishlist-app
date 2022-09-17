@@ -4,12 +4,19 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { useState } from "react";
+import { addList } from "../api";
 
 export default function AddAListName({ open, close }) {
   let navigate = useNavigate();
 
-  const listPage = () => {
-    navigate("my-list");
+
+  const [list, setList] = useState("");
+
+  const listPage = async () => {
+    const res = await addList(localStorage.getItem("token"), list);
+    close();
+    navigate(`my-list/${list}/${res.id}`)
   };
 
   return (
@@ -25,22 +32,23 @@ export default function AddAListName({ open, close }) {
           background: "white",
           borderRadius: 5,
           boxShadow: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          alignContent: 'center',
-          alignItems: 'center',
-          justifyContent: 'space-around',
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          alignItems: "center",
+          justifyContent: "space-around",
         }}
       >
         <TextField
           required
+          onChange={(e) => setList(e.target.value)}
           id="list-name"
           label="List Name"
           name="list-name"
-          sx={{ 
+          sx={{
             m: 4,
             width: 300,
-        }}
+          }}
         />
         <Button
           variant="contained"

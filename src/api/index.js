@@ -47,7 +47,6 @@ export const singIn = async (email, password) => {
       email: email,
       password: password,
     });
-    console.log(res);
     return res.data;
   } catch (e) {
     throw Error(e.message);
@@ -141,5 +140,89 @@ export const addList = async (token, name) => {
     return res.data;
   } catch (e) {
     return false;
+  }
+};
+
+export const getList = async (name) => {
+  try {
+    const res = await axios.get(
+      generateURL("wishlists/name"), {
+        name: name
+      }
+    );
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getListDetails = async (id) => {
+  try {
+    const res = await axios.get(generateURL(`wishlists/${id}`));
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const addItemToWish = async (idWish, idItem) => {
+  try {
+    const res = await axios.post(generateURL("itemsWishlists"), {
+      wishlistId: idWish,
+      itemId: idItem,
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const updateItemBought = async (idItemWish) => {
+  try {
+    const res = await axios.patch(generateURL(`itemsWishlists/${idItemWish}`), {
+      isBought: true,
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const addItem = async (name, details, link, size, quantity) => {
+  try {
+    const res = await axios.post(generateURL("items"), {
+      name: name,
+      link: link,
+      details: details,
+      size: size,
+      quantity: quantity
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getAllItems = async (token) => {
+  try {
+    const res = await axios.get(generateURL("users/items/wishlists"), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res.data;
+  } catch (e) {
+    throw Error(e);
+  }
+};
+
+export const getItemToWish = async (wishId, itemId) => {
+  try {
+    const res = await axios.get(generateURL(`itemsWishists/${wishId}/${itemId}`));
+
+    return res.data;
+  } catch (e) {
+    throw Error(e);
   }
 };

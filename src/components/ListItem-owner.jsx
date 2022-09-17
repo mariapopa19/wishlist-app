@@ -2,9 +2,22 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import DisableButton from "./Disable-Button";
+import { useState } from "react";
+import { getItemToWish, updateItemBought } from "../api";
 
-export default function ListItem({ label }) {
+export default function ListItem({ label, details, link, size, isBought, quantity, idList, idItem }) {
+
+
+  const [checked, setChecked] =  useState(false);
+
+  const disableItem = async (e) => {
+    setChecked(e.target.checked);
+    const res = await getItemToWish(idList, idItem)
+    if(res) {
+      await updateItemBought(res.id);
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -15,15 +28,15 @@ export default function ListItem({ label }) {
       }}
     >
       <FormControlLabel
-        control={<Checkbox />}
+        control={<Checkbox disabled={checked}  onChange={disableItem} />}
+        disabled={checked}
         label={
           <Typography component="div" variant="h6">
             {label}
           </Typography>
         }
       />
-
-      <DisableButton />
+  
     </Box>
   );
 }
