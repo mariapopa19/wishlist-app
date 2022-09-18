@@ -5,18 +5,14 @@ import Stack from "@mui/material/Stack";
 import ListItem from "../components/ListItem-owner";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import PeopleMyList from "../components/People-myList";
 import { useEffect, useState } from "react";
 import Footer from "../layout/Footer";
 import { useParams } from "react-router-dom";
-import { getListDetails } from "../api";
+import { getListDetails, getPeopleWhoCanSeeMyList } from "../api";
 import AskItemType from "../components/Modal-askTypeItemToAdd-onWishListOpen";
-
 
 export default function ListOwner() {
   const { id } = useParams();
@@ -24,7 +20,6 @@ export default function ListOwner() {
   const [name, setName] = useState([]);
   const [items, setItems] = useState([]);
   
-
   const getDetailsList = async () => {
     const res = await getListDetails(id);
     if (res) {
@@ -32,10 +27,18 @@ export default function ListOwner() {
       setItems(res.itemWishlist);
     }
   };
+  const [people, setPeople] = useState([]);
+  const getPeople = async () => {
+    const res = await getPeopleWhoCanSeeMyList(id);
+    if (res) {
+      setPeople(res);
+    }
+  };
 
   useEffect(() => {
     getDetailsList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    getPeople();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -78,14 +81,14 @@ export default function ListOwner() {
           >
             {items.map((elm) => (
               <ListItem
-                idList={id}
-                idItem={elm.id}
                 label={elm.item.name}
                 details={elm.item.details}
-                quantity={elm.item.quantity}
                 link={elm.item.link}
                 size={elm.item.size}
                 isBought={elm.isBought}
+                quantity={elm.item.quantity}
+                idList={id}
+                idItem={elm.itemId}
               />
             ))}
           </Stack>
@@ -103,7 +106,7 @@ export default function ListOwner() {
         <AskItemType open={open} close={handleClose} />
       </Grid>
       <Grid item lg={6}>
-        <Box
+        {/* <Box
           sx={{
             my: 3,
           }}
@@ -133,19 +136,25 @@ export default function ListOwner() {
               Invite
             </Button>
           </Box>
-        </Box>
-        <Typography variant="h4" gutterBottom>
-          Friends who can see
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <PeopleMyList username="cristi26" />
-          <PeopleMyList username="maria19" />
-          <PeopleMyList username="adina10" />
+        </Box> */}
+        <Box>
+          <Typography variant="h4" gutterBottom>
+            Friends who can see
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {
+            people.length === 0 ?
+            <Typography variant='body1'>Nothing to show here</Typography>
+            :
+            people.map(elm =>
+              <PeopleMyList username={elm.username} avatar={elm.userDetails.avatar} />
+            )}
+          </Box>
         </Box>
       </Grid>
       <Grid

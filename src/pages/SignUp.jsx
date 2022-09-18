@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -31,14 +29,22 @@ function SignUp() {
 
   const navigate = useNavigate();
 
+  const [show, setShow] = React.useState(false);
+
   const handleSubmit =  async (event) => {
     event.preventDefault();
+    try {
     const res = await createUser(user, pass, email, firstName, lastName, phone, dob, city, country, detailedAddress);
 
     if(res){
       navigate('/')
     }
-  
+  }catch (e) {
+    if(e.message === "Request failed with status code 500") {
+      setShow(true);
+    }
+  }
+
   };
 
   return (
@@ -198,6 +204,9 @@ function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+              {show ? (<Typography variant='body2' sx={{
+              color: 'red',
+            }} >The account is already existing, plese sing in</Typography>) : null}
               {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}

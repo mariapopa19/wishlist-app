@@ -2,16 +2,12 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Slider from "@mui/material/Slider";
-import { Checkbox, Grid, ListItemText, OutlinedInput } from "@mui/material";
-import Select from "@mui/material/Select";
-import { useContext, useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
-import { addItem, addItemToWish, getAllItems } from "../api";
+import { addItem, addItemToWish } from "../api";
 import { useParams } from "react-router-dom";
-import { GeneralContext } from "../context/GeneralContext";
 
 export default function AddListItem({ open, close }) {
 
@@ -30,50 +26,7 @@ const {id} = useParams();
   const [link, setLink] = useState("");
   const [details, setDetails] = useState("");
   const [size, setSize] = useState("");
-
-  const { logOut } = useContext(GeneralContext);
-  const [items, setItems] = useState([]);
-
-  const getDetails = async () => {
-    try {
-      const res = await getAllItems(localStorage.getItem("token"));
-      if (res) {
-        setItems(res);
-      }
-    } catch (e) {
-      if (e.message === "AxiosError: Request failed with status code 403") {
-        logOut();
-      }
-    }
-  };
-
-  useEffect(() => {
-    getDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const [itemName, setItemName] = useState([]);
-  const handleChangeListName = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setItemName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
-  // ! de facut separat un modal din care isi poate alege item-urile pe care vrea sa le adauge 
+ 
   const addItemButton = async () => {
     const res = await addItem(name, details, link, size, quantity);
      await addItemToWish(res.id, id);
@@ -155,18 +108,7 @@ const {id} = useParams();
                   </Box>
                 </Box>
               </Box>
-              <TextField
-                // required
-                fullWidth
-                multiline
-                rows={4}
-                maxRows={4}
-                onChange={e => setDetails(parseInt(e.target.value))}
-                id="item-details"
-                label="Details"
-                name="item-details"
-                // sx={{ m: 2 }}
-              />
+             
             </Box>
           </Grid>
           <Grid item lg={6}>
@@ -191,6 +133,18 @@ const {id} = useParams();
                   justifyContent: "space-evenly",
                 }}
               >
+                 <TextField
+                // required
+                fullWidth
+                multiline
+                rows={4}
+                maxRows={4}
+                onChange={e => setDetails(parseInt(e.target.value))}
+                id="item-details"
+                label="Details"
+                name="item-details"
+                // sx={{ m: 2 }}
+              />
                 <TextField
                   fullWidth
                   id="size"
@@ -199,25 +153,6 @@ const {id} = useParams();
                   onChange={(e) => setSize(e.target.value)}
                   // sx={{ m: 2 }}
                 />
-                <FormControl sx={{ width: 400, my: 1 }}>
-                  <InputLabel>List Name</InputLabel>
-                  <Select
-                    id="demo-multiple-checkbox"
-                    multiple
-                    value={itemName}
-                    onChange={handleChangeListName}
-                    input={<OutlinedInput label="Item Name" />}
-                    renderValue={(selected) => selected.join(", ")}
-                    MenuProps={MenuProps}
-                  >
-                    {items.map((name) => (
-                      <MenuItem key={name.name} value={name.name}>
-                        <Checkbox checked={itemName.indexOf(name.name) > -1} />
-                        <ListItemText primary={name.name} />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
                 {/* <Box>
                   <InputLabel>
                     If the items are not aviable, give some alternatives

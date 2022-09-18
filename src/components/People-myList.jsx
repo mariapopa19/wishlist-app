@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 
-export default function PeopleMyList ({username}) {
+export default function PeopleMyList ({username, avatar}) {
     return (
         <Box 
             sx={{
@@ -10,7 +10,17 @@ export default function PeopleMyList ({username}) {
                 m: 1,
             }}
         >
-            <Avatar
+           { avatar ? 
+           <Avatar
+           src={avatar}
+           alt={username}
+           variant='rounded'
+                sx={{
+                    mr: 2,
+                }}
+           />
+            :
+           <Avatar
                 variant='rounded'
                 sx={{
                     mr: 2,
@@ -18,6 +28,7 @@ export default function PeopleMyList ({username}) {
             >
                 <AccountBoxOutlinedIcon />
             </Avatar>
+            }
             <Typography variant='body' gutterBottom >@{username}</Typography>
         </Box>
     );

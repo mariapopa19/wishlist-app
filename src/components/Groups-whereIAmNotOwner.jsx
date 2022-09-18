@@ -9,10 +9,10 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
     }
 }));
 
-export default function Groups({ name }) {
+export default function Groups({ name, id }) {
     return (
         // <Link to={`${name}`} style={{ textDecoration: 'none' }}>
-        <Link to='group' style={{ textDecoration: 'none' }}>
+        <Link to={`group-invited/${id}`} style={{ textDecoration: 'none' }}>
             <Box
                 sx={{
                     display: 'flex',

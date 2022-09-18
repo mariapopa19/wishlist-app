@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import ButtonLists from "../components/Button-friendsLists";
 import Footer from "../layout/Footer";
 
-export default function GroupPage({ name }) {
+export default function GroupPage({ name, id }) {
     return (
         <Grid container>
             <Grid item lg={12} md={12} sm={12}>

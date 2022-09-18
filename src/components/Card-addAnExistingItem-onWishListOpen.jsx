@@ -26,7 +26,7 @@ export default function ItemCard({
   return (
     <Box>
       {show ? (
-        <Card>
+        <Card sx={{ minWidth: 100, width: 200, m:2 }}>
           <CardContent>
             <Typography variant="h6">{name}</Typography>
             <Typography>Link: {link}</Typography>

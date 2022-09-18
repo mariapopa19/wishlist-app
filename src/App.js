@@ -9,6 +9,7 @@ import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import { GeneralProvider } from "./context/GeneralContext";
 import { ProtectedRoute } from "./routes/ProtectedRoutes";
+import MyGroup from "./pages/MyGroup-page";
 
 export default function App() {
   return (
@@ -35,8 +36,8 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="item" />
-            <Route path="group">
+            <Route path='my-group/:id' element={<MyGroup />} />
+            <Route path="group-invited/:id">
               <Route
                 index
                 element={

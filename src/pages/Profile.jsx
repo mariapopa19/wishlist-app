@@ -3,14 +3,15 @@ import NavBar from "../layout/NavBar";
 import Avatar from "@mui/material/Avatar";
 import ListMinimised from "../components/ListMinimised";
 import Footer from "../layout/Footer";
-import Groups from "../components/Groups";
+import Groups from "../components/Groups-whereIAmNotOwner";
 import ButtonAdd from "../components/Button-add-a-list";
 import { useEffect, useState } from "react";
 import AddItem from "../components/Modal-addItem-onProfileOpen";
 import AddAListName from "../components/Modal-addAList";
-import { getUser } from "../api";
+import { getUser, getUserGroupsMember, getUserGroupsOwner } from "../api";
 import { useContext } from "react";
 import { GeneralContext } from "../context/GeneralContext";
+import GroupOwner from "../components/Groups-Owner";
 
 export default function Profile() {
   // const {open, setOpen} = useContext(GeneralContext);
@@ -59,8 +60,37 @@ export default function Profile() {
     }
   };
 
+  const [ownerGroups, setOwnerGroups] = useState([]);
+  const getGroupsOwner = async () => {
+    try {
+      const res = await getUserGroupsOwner(localStorage.getItem("token"))
+      if (res) {
+        setOwnerGroups(res);
+      }
+    } catch (e) {
+      if(e.message === "AxiosError: Request failed with status code 403") {
+        logOut();
+      }
+    }
+  }
+  const [memberGroups, setMemberGroups] = useState([]);
+  const getGroupsMember = async () => {
+    try {
+      const res = await getUserGroupsMember(localStorage.getItem("token"))
+      if (res) {
+        setMemberGroups(res);
+      }
+    } catch (e) {
+      if(e.message === "AxiosError: Request failed with status code 403") {
+        logOut();
+      }
+    }
+  }
+
   useEffect(() => {
     getDetails();
+    getGroupsOwner();
+    getGroupsMember();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -176,7 +206,9 @@ export default function Profile() {
         <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>
           My groups
         </Typography>
+        <ButtonAdd name={"Create a group"} />
       </Grid>
+      
       <Grid
         item
         xs={12}
@@ -187,8 +219,42 @@ export default function Profile() {
           ml: 2,
         }}
       >
-        <Groups name={"friends"} />
-        <Groups name={"family"} />
+        {
+          ownerGroups.map(elm => <GroupOwner name={elm.name} id={elm.id} />)
+        }
+        {/* <GroupOwner name={"friends"} />
+        <GroupOwner name={"family"} /> */}
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+          ml: 5,
+          mt: 5,
+        }}
+      >
+        <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>
+          Groups where I am invited
+        </Typography>
+      </Grid>
+      
+      <Grid
+        item
+        xs={12}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyItems: "left",
+          ml: 2,
+        }}
+      >
+        {
+          memberGroups.map(elm => <Groups name={elm.name} id={elm.id} />)
+        }
+        {/* <Groups name={"friends"} />
+        <Groups name={"family"} /> */}
       </Grid>
       <Grid
         item

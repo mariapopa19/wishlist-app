@@ -14,6 +14,8 @@ export default function ListMinimised({ name, id }) {
     <Card
       sx={{
         ml: 6,
+        p:2,
+        boxShadow: 3,
       }}
       onClick={handleClick}
     >

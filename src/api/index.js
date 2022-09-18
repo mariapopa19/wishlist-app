@@ -145,11 +145,7 @@ export const addList = async (token, name) => {
 
 export const getList = async (name) => {
   try {
-    const res = await axios.get(
-      generateURL("wishlists/name"), {
-        name: name
-      }
-    );
+    const res = await axios.get(generateURL(`wishlists/name/${name}`));
     return res.data;
   } catch (e) {
     return false;
@@ -195,7 +191,7 @@ export const addItem = async (name, details, link, size, quantity) => {
       link: link,
       details: details,
       size: size,
-      quantity: quantity
+      quantity: quantity,
     });
     return res.data;
   } catch (e) {
@@ -219,10 +215,113 @@ export const getAllItems = async (token) => {
 
 export const getItemToWish = async (wishId, itemId) => {
   try {
-    const res = await axios.get(generateURL(`itemsWishists/${wishId}/${itemId}`));
-
+    const res = await axios.get(
+      generateURL(`itemsWishlists/${wishId}/${itemId}`)
+    );
     return res.data;
   } catch (e) {
     throw Error(e);
+  }
+};
+
+export const getPeopleWhoCanSeeMyList = async (id) => {
+  try {
+    const res = await axios.get(generateURL(`${id}/all/users`));
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getUserGroupsOwner = async (token) => {
+  try {
+    const res = await axios.get(generateURL("users/groups/owner"), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+export const getUserGroupsMember = async (token) => {
+  try {
+    const res = await axios.get(generateURL("users/groups/member"), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const createMyGroup = async (token, name) => {
+  try {
+    const res = await axios.get(
+      generateURL("usersGroups/create/owner"),
+      {
+        name: name,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getGroupDetails = async (id) => {
+  try {
+    const res = await axios.get(generateURL(`groups/${id}/users/wishlists`));
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const addListToGroup = async (idList, idGroup) => {
+  try {
+    const res = await axios.post(generateURL('wishlistsGroups'),{
+      wishlistId: idList,
+      groupId: idGroup
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const addPeopleToGroup = async (username, idGroup) => {
+  try {
+    const res = await axios.post(generateURL('usersGroups'),{
+      username: username,
+      groupId: idGroup
+    });
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getAllUsers = async (token) => {
+  try {
+    const res = await axios.get(
+      generateURL("users/all"),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    return false;
   }
 };
