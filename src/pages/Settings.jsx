@@ -14,7 +14,7 @@ import { styled } from "@mui/material/styles";
 import { blue, red } from "@mui/material/colors";
 import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
-import { getUser, updateUser } from "../api";
+import { deleteUser, getUser, updateUser } from "../api";
 import { useContext, useEffect, useState } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import { useNavigate } from "react-router-dom";
@@ -62,6 +62,7 @@ export default function Settings() {
 
   useEffect(() => {
     getDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const saveButton = async () => {
@@ -78,6 +79,11 @@ export default function Settings() {
       address
     );
     navigate("/dashboard/settings");
+  };
+
+  const deleteButton = async () => {
+    await deleteUser(localStorage.getItem("token"));
+    navigate("/");
   };
 
   const ColorButton = styled(Button)(({ theme }) => ({
@@ -406,7 +412,11 @@ export default function Settings() {
                 mx: 20,
               }}
             >
-              <DeleteButton size="large" sx={{ width: 200 }}>
+              <DeleteButton
+                onClick={deleteButton}
+                size="large"
+                sx={{ width: 200 }}
+              >
                 Delete account
               </DeleteButton>
               <ColorButton

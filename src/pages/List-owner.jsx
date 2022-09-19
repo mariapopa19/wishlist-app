@@ -8,13 +8,27 @@ import IconButton from "@mui/material/IconButton";
 import { Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import PeopleMyList from "../components/People-myList";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../layout/Footer";
 import { useParams } from "react-router-dom";
-import { getListDetails, getPeopleWhoCanSeeMyList } from "../api";
+import { getListDetails, getPeopleWhoCanSeeMyList, getUser } from "../api";
 import AskItemType from "../components/Modal-askTypeItemToAdd-onWishListOpen";
+import { GeneralContext } from "../context/GeneralContext";
 
 export default function ListOwner() {
+  const { logOut } = useContext(GeneralContext);
+
+  const logVerify = async () => {
+    try {
+      await getUser(localStorage.getItem("token"));
+    } catch (e) {
+      if (e.message === "AxiosError: Request failed with status code 403") {
+        logOut();
+      }
+    }
+  };
+
+
   const { id } = useParams();
 
   const [name, setName] = useState([]);
@@ -36,6 +50,7 @@ export default function ListOwner() {
   };
 
   useEffect(() => {
+    logVerify();
     getDetailsList();
     getPeople();
     // eslint-disable-next-line react-hooks/exhaustive-deps

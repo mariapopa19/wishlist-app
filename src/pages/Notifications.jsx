@@ -6,10 +6,29 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { getUser } from "../api";
+import { GeneralContext } from "../context/GeneralContext";
 import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
 
 export default function Notifications() {
+  const { logOut } = useContext(GeneralContext);
+
+  const logVerify = async () => {
+    try {
+      await getUser(localStorage.getItem("token"));
+    } catch (e) {
+      if (e.message === "AxiosError: Request failed with status code 403") {
+        logOut();
+      }
+    }
+  };
+  useEffect(() => {
+    logVerify();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <Grid container sx={{ flexGrow: 1 }}>
       <Grid item xs={12} md={12} lg={12}>

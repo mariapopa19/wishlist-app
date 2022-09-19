@@ -42,12 +42,12 @@ export default function App() {
                 index
                 element={
                   <ProtectedRoute>
-                    <GroupPage name={"friends"} />
+                    <GroupPage />
                   </ProtectedRoute>
                 }
               />
               <Route
-                path="list"
+                path="list/:namePerson/:nameList/:id"
                 element={
                   <ProtectedRoute>
                     <ListOther />

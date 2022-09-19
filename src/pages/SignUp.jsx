@@ -205,8 +205,8 @@ function SignUp() {
                 />
               </Grid>
               {show ? (<Typography variant='body2' sx={{
-              color: 'red',
-            }} >The account is already existing, plese sing in</Typography>) : null}
+              color: 'red', ml: 2,
+            }} >The account already exists, plese sing in</Typography>) : null}
               {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}

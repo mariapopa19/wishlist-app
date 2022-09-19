@@ -12,19 +12,22 @@ import { getUser, getUserGroupsMember, getUserGroupsOwner } from "../api";
 import { useContext } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import GroupOwner from "../components/Groups-Owner";
+import AddGroupName from "../components/Modal-createAGroup";
 
 export default function Profile() {
   // const {open, setOpen} = useContext(GeneralContext);
   const [openList, setOpenList] = useState(false);
   const [openItem, setOpenItem] = useState(false);
+  const [openGroup, setOpenGroup] = useState(false);
 
-  const handleOpenList = () => {
-    setOpenList(true);
-  };
+  const handleOpenList = () => setOpenList(true);
+
   const handleOpenItem = () => setOpenItem(true);
+  const handleOpenGroup = () => setOpenGroup(true);
 
   const handleCloseList = () => setOpenList(false);
   const handleCloseItem = () => setOpenItem(false);
+  const handleCloseGroup = () => setOpenGroup(false);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -34,8 +37,6 @@ export default function Profile() {
   const [wishlist, setWishlist] = useState([]);
 
   const { logOut } = useContext(GeneralContext);
-
-  // ! de ce atunci cand foloesc useEffect imi face loop
 
   const getDetails = async () => {
     try {
@@ -52,9 +53,9 @@ export default function Profile() {
           })
         );
         setWishlist(res.wishlist);
-      } 
+      }
     } catch (e) {
-      if(e.message === "AxiosError: Request failed with status code 403") {
+      if (e.message === "AxiosError: Request failed with status code 403") {
         logOut();
       }
     }
@@ -63,41 +64,37 @@ export default function Profile() {
   const [ownerGroups, setOwnerGroups] = useState([]);
   const getGroupsOwner = async () => {
     try {
-      const res = await getUserGroupsOwner(localStorage.getItem("token"))
+      const res = await getUserGroupsOwner(localStorage.getItem("token"));
       if (res) {
         setOwnerGroups(res);
       }
     } catch (e) {
-      if(e.message === "AxiosError: Request failed with status code 403") {
+      if (e.message === "AxiosError: Request failed with status code 403") {
         logOut();
       }
     }
-  }
+  };
   const [memberGroups, setMemberGroups] = useState([]);
   const getGroupsMember = async () => {
     try {
-      const res = await getUserGroupsMember(localStorage.getItem("token"))
+      const res = await getUserGroupsMember(localStorage.getItem("token"));
       if (res) {
         setMemberGroups(res);
       }
     } catch (e) {
-      if(e.message === "AxiosError: Request failed with status code 403") {
+      if (e.message === "AxiosError: Request failed with status code 403") {
         logOut();
       }
     }
-  }
+  };
 
   useEffect(() => {
     getDetails();
     getGroupsOwner();
     getGroupsMember();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO: pe butonul de pe pagina de profil sa poti adauga un item nou in oricare lista
-  // TODO: iar pe butonul de pe pagina cu lista sa am o optiune inainte de a accesa modalul sau chiar in modal in care ma lasa sa selectez un item deja existent
-  // TODO: dar in acelasi timp cere ca sa am o lista cu toate item-urile pe care le am deja in liste si de acolo sa selectez ce item-uri vreu sa imi fac o lista noua sau vreau sa le adaug intr-o lista deja existenta
-  // TODO: in wishlist as putea sa adaug doua butoane, unul cu 'add an existing item' si celalat cu 'add a new one'
 
   return (
     <Grid container sx={{ flexGrow: 1 }}>
@@ -191,7 +188,9 @@ export default function Profile() {
           justifyItems: "left",
         }}
       >
-        {wishlist.map((elm, i) => <ListMinimised name={elm.name} id={elm.id} />)}
+        {wishlist.map((elm, i) => (
+          <ListMinimised name={elm.name} id={elm.id} />
+        ))}
       </Grid>
       <Grid
         item
@@ -206,9 +205,12 @@ export default function Profile() {
         <Typography variant="h2" gutterBottom sx={{ m: { xs: 2 } }}>
           My groups
         </Typography>
-        <ButtonAdd name={"Create a group"} />
+        <Box>
+          <ButtonAdd click={handleOpenGroup} name={"Create a group"} />
+          <AddGroupName open={openGroup} close={handleCloseGroup} />
+        </Box>
       </Grid>
-      
+
       <Grid
         item
         xs={12}
@@ -219,9 +221,9 @@ export default function Profile() {
           ml: 2,
         }}
       >
-        {
-          ownerGroups.map(elm => <GroupOwner name={elm.name} id={elm.id} />)
-        }
+        {ownerGroups.map((elm, i) => (
+          <GroupOwner name={elm.name} id={elm.id} />
+        ))}
         {/* <GroupOwner name={"friends"} />
         <GroupOwner name={"family"} /> */}
       </Grid>
@@ -239,7 +241,7 @@ export default function Profile() {
           Groups where I am invited
         </Typography>
       </Grid>
-      
+
       <Grid
         item
         xs={12}
@@ -250,9 +252,9 @@ export default function Profile() {
           ml: 2,
         }}
       >
-        {
-          memberGroups.map(elm => <Groups name={elm.name} id={elm.id} />)
-        }
+        {memberGroups.map((elm) => (
+          <Groups name={elm.name} id={elm.id} />
+        ))}
         {/* <Groups name={"friends"} />
         <Groups name={"family"} /> */}
       </Grid>

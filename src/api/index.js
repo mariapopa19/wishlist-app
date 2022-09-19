@@ -260,7 +260,7 @@ export const getUserGroupsMember = async (token) => {
 
 export const createMyGroup = async (token, name) => {
   try {
-    const res = await axios.get(
+    const res = await axios.post(
       generateURL("usersGroups/create/owner"),
       {
         name: name,
@@ -325,3 +325,30 @@ export const getAllUsers = async (token) => {
     return false;
   }
 };
+
+export const deleteUser = async (token) => {
+  try {
+    const res = await axios.delete(
+      generateURL("deleteUser"),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};
+
+// export const deteleWishList = async () => {
+//   try {
+//     const res = await axios.delete(
+//       generateURL("deleteUser")
+//     );
+//     return res.data;
+//   } catch (e) {
+//     return false;
+//   }
+// }

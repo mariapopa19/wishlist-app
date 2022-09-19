@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { createMyGroup } from "../api";
 
 export default function AddGroupName({ open, close }) {
   let navigate = useNavigate();
@@ -13,9 +14,9 @@ export default function AddGroupName({ open, close }) {
   const [group, setGroup] = useState("");
 
   const listPage = async () => {
-    // const res = await addList(localStorage.getItem("token"), list);
+    const res = await createMyGroup(localStorage.getItem("token"), group);
     close();
-    // navigate(`my-list/${list}/${res.id}`)
+    navigate(`my-list/${res.id}`)
   };
 
   return (
@@ -41,9 +42,9 @@ export default function AddGroupName({ open, close }) {
         <TextField
           required
           onChange={(e) => setGroup(e.target.value)}
-          id="list-name"
-          label="List Name"
-          name="list-name"
+          id="group-name"
+          label="Group Name"
+          name="group-name"
           sx={{
             m: 4,
             width: 300,

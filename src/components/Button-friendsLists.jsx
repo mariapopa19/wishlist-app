@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ListOfWish from './List-friends';
 
 
-export default function ButtonLists({ name }) {
+export default function ButtonLists({ namePerson, id, wish }) {
 
     
 
@@ -30,9 +30,9 @@ export default function ButtonLists({ name }) {
                     p: 2,
                 }}
             >
-                {name}'s wishlist
+                {namePerson}'s wishlist
             </Button>
-            <ListOfWish open={open} anchorEl={anchorEl} close={handleClose} name={name} />
+            <ListOfWish open={open} anchorEl={anchorEl} close={handleClose} namePerson={namePerson} userId={id} wish={wish} />
         </div>
     );
 }
