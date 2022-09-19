@@ -15,6 +15,7 @@ import { getListDetails, getPeopleWhoCanSeeMyList, getUser } from "../api";
 import AskItemType from "../components/Modal-askTypeItemToAdd-onWishListOpen";
 import { GeneralContext } from "../context/GeneralContext";
 
+
 export default function ListOwner() {
   const { logOut } = useContext(GeneralContext);
 
@@ -28,12 +29,11 @@ export default function ListOwner() {
     }
   };
 
-
   const { id } = useParams();
 
   const [name, setName] = useState([]);
   const [items, setItems] = useState([]);
-  
+
   const getDetailsList = async () => {
     const res = await getListDetails(id);
     if (res) {
@@ -83,7 +83,12 @@ export default function ListOwner() {
           {name} list
         </Typography>
       </Grid>
-      <Grid item lg={6} md={6} sx={{ height: 700 }}>
+      <Grid
+        item
+        lg={6}
+        md={6}
+        sx={{ height: 'auto', display: "flex", flexWrap: "wrap" }}
+      >
         <Box
           sx={{
             my: 3,
@@ -120,7 +125,7 @@ export default function ListOwner() {
         </Box>
         <AskItemType open={open} close={handleClose} />
       </Grid>
-      <Grid item lg={6}>
+      <Grid item lg={6} sx={{ mt: 2 }}>
         {/* <Box
           sx={{
             my: 3,
@@ -152,6 +157,8 @@ export default function ListOwner() {
             </Button>
           </Box>
         </Box> */}
+        {/* <DeleteWishlistButton /> */}
+
         <Box>
           <Typography variant="h4" gutterBottom>
             Friends who can see
@@ -162,12 +169,15 @@ export default function ListOwner() {
               flexDirection: "column",
             }}
           >
-            {
-            people.length === 0 ?
-            <Typography variant='body1'>Nothing to show here</Typography>
-            :
-            people.map(elm =>
-              <PeopleMyList username={elm.username} avatar={elm.userDetails.avatar} />
+            {people.length === 0 ? (
+              <Typography variant="body1">Nothing to show here</Typography>
+            ) : (
+              people.map((elm) => (
+                <PeopleMyList
+                  username={elm.username}
+                  avatar={elm.userDetails.avatar}
+                />
+              ))
             )}
           </Box>
         </Box>

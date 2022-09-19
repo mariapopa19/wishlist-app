@@ -9,6 +9,7 @@ const GeneralProvider = (props) => {
   const [namePerson, setNamePerson] = useState("");
   const [nameList, setNameList] = useState("");
   const [groupPurchase, setGroupPurcase] = useState(''); 
+const [notifications, setNotifications] = useState([]);
 
   let navigate = useNavigate();
 
@@ -31,6 +32,8 @@ const GeneralProvider = (props) => {
         setNameList,
         groupPurchase,
         setGroupPurcase,
+        notifications,
+        setNotifications,
         logOut
       }}
     >

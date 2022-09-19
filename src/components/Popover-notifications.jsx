@@ -1,8 +1,13 @@
 import { Box, ButtonBase, Divider, Popover, Stack, Typography } from "@mui/material";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { GeneralContext } from "../context/GeneralContext";
 
 export default function NotificationPopover({ open, close, anchorEl }) {
   let navigate = useNavigate();
+
+  const {notifications} = useContext(GeneralContext);
+
 
   const allNotifications = () => {
     navigate('/dashboard/notifications')
@@ -19,15 +24,11 @@ export default function NotificationPopover({ open, close, anchorEl }) {
     >
       <Stack divider={<Divider variant="middle" />} sx={{width: 400}}>
         {/* a map of notifications 3 max showing */}
-        <Typography variant="body1" sx={{ p: 2 }}>
-          Title of the notification
-        </Typography>
-        <Typography variant="body1" sx={{ p: 2 }}>
-          Title of the notification
-        </Typography>
-        <Typography variant="body1" sx={{ p: 2 }}>
-          Title of the notification
-        </Typography>
+       
+        {notifications.slice(0, 3).map(elm => (
+          <Typography variant="body1" sx={{ p: 2 }}>
+          {elm.details}
+        </Typography>))}
       </Stack>
       <ButtonBase
       onClick={allNotifications}

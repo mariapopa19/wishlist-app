@@ -192,6 +192,7 @@ export default function MyGroup() {
               ) : (
                 people.map((elm) => (
                   <PeopleMyList
+                    key="ceva"
                     username={elm.username}
                     avatar={elm.userDetails.avatar}
                   />

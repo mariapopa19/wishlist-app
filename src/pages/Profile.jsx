@@ -8,7 +8,7 @@ import ButtonAdd from "../components/Button-add-a-list";
 import { useEffect, useState } from "react";
 import AddItem from "../components/Modal-addItem-onProfileOpen";
 import AddAListName from "../components/Modal-addAList";
-import { getUser, getUserGroupsMember, getUserGroupsOwner } from "../api";
+import { getNotifications, getUser, getUserGroupsMember, getUserGroupsOwner } from "../api";
 import { useContext } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import GroupOwner from "../components/Groups-Owner";
@@ -36,7 +36,7 @@ export default function Profile() {
 
   const [wishlist, setWishlist] = useState([]);
 
-  const { logOut } = useContext(GeneralContext);
+  const { logOut, setNotifications } = useContext(GeneralContext);
 
   const getDetails = async () => {
     try {
@@ -88,10 +88,18 @@ export default function Profile() {
     }
   };
 
+  const getNotified = async () => {
+    const res = await getNotifications(localStorage.getItem("token"));
+    if(res) {
+      setNotifications(res);
+    }
+  }
+
   useEffect(() => {
     getDetails();
     getGroupsOwner();
     getGroupsMember();
+    getNotified();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

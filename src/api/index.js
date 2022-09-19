@@ -342,13 +342,18 @@ export const deleteUser = async (token) => {
   }
 };
 
-// export const deteleWishList = async () => {
-//   try {
-//     const res = await axios.delete(
-//       generateURL("deleteUser")
-//     );
-//     return res.data;
-//   } catch (e) {
-//     return false;
-//   }
-// }
+export const getNotifications = async (token) => {
+  try {
+    const res = await axios.get(
+      generateURL("notifications"),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (e) {
+    return false;
+  }
+};

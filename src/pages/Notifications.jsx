@@ -14,7 +14,7 @@ import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
 
 export default function Notifications() {
-  const { logOut } = useContext(GeneralContext);
+  const { logOut, notifications } = useContext(GeneralContext);
 
   const logVerify = async () => {
     try {
@@ -25,8 +25,11 @@ export default function Notifications() {
       }
     }
   };
+
+
   useEffect(() => {
     logVerify();
+    console.log(notifications);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
@@ -73,7 +76,7 @@ export default function Notifications() {
           >
             <Stack>
               {/* // ! put a map of notifications */}
-              <ButtonBase
+              { notifications.map(elm => (<ButtonBase
                 sx={{
                   borderRadius: 3,
                   m: 2,
@@ -89,31 +92,25 @@ export default function Notifications() {
                     height: 130,
                     boxShadow: 5,
                     display: "flex",
-                    alignItems: "flex-start",
+                    alignItems: "center",
                   }}
                 >
                   <Box
                     sx={{
                       width: "100%",
                       display: "flex",
-                      flexDirection: "column",
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
                       ml: 4,
                       mr: 4,
                     }}
                   >
                     <Typography variant="h6" gutterBottom sx={{ m: 2 }}>
-                      Title
-                    </Typography>{" "}
-                    {/* title of the notification */}
-                    {"\n"}
-                    <Typography variant="body1" gutterBottom sx={{ m: 2 }}>
-                      Body of the notification
+                    {elm.details}
                     </Typography>
                   </Box>
                 </Box>
-              </ButtonBase>
-            </Stack>
+              </ButtonBase>))}
+            </Stack> 
           </Box>
         </Box>
       </Grid>
