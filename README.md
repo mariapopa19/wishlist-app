@@ -12,6 +12,12 @@ In the groups where the user is invited, he can buy the products on the list, al
 
 In the project directory, you can run:
 
+### `clone the repo `
+
+### `npm install`
+
+For installing all the dependencies
+
 ### `npm start`
 
 Runs the app in the development mode.\
